@@ -1,15 +1,15 @@
-﻿// Copyright 2011 - Present RealDimensions Software, LLC, the original 
+﻿// Copyright 2011 - Present RealDimensions Software, LLC, the original
 // authors/contributors from ChocolateyGallery
 // at https://github.com/chocolatey/chocolatey.org,
-// and the authors/contributors of NuGetGallery 
+// and the authors/contributors of NuGetGallery
 // at https://github.com/NuGet/NuGetGallery
-//  
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 //   http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -29,7 +29,7 @@ namespace NuGetGallery
         internal static readonly char[] IdSeparators = new[] { '.', '-' };
 
         public Package Package { get; set; }
-        
+
         public PackageIndexEntity()
         {
         }
@@ -53,7 +53,7 @@ namespace NuGetGallery
             var field = new Field("Id-Exact", Package.PackageRegistration.Id.ToLowerInvariant(), Field.Store.YES, Field.Index.NOT_ANALYZED);
             field.Boost = 4.5f;
             document.Add(field);
-            
+
             // We store the Id/Title field in multiple ways, so that it's possible to match using multiple
             // styles of search
             // Note: no matter which way we store it, it will also be processed by the Analyzer later.
@@ -68,7 +68,7 @@ namespace NuGetGallery
             field.Boost = 0.8f;
             document.Add(field);
 
-            // Style 3: camel-case tokenized (so you can search using parts of the camelCasedWord). 
+            // Style 3: camel-case tokenized (so you can search using parts of the camelCasedWord).
             // De-boosted since matches are less likely to be meaningful
             field = new Field("Id", CamelSplitId(Package.PackageRegistration.Id.ToLowerInvariant()), Field.Store.NO, Field.Index.ANALYZED);
             field.Boost = 0.25f;
@@ -164,7 +164,7 @@ namespace NuGetGallery
             var reviewedByUserName = string.Empty;
             if (Package.ReviewedBy != null)
             {
-                reviewedByUserName = Package.ReviewedBy.Username;  
+                reviewedByUserName = Package.ReviewedBy.Username;
             }
             document.Add(new Field("PackageReviewer", reviewedByUserName, Field.Store.YES, Field.Index.NO));
 
@@ -189,7 +189,7 @@ namespace NuGetGallery
 
             string displayName = String.IsNullOrEmpty(Package.Title) ? Package.PackageRegistration.Id : Package.Title;
             document.Add(new Field("DisplayName", displayName.ToLower(CultureInfo.CurrentCulture), Field.Store.NO, Field.Index.NOT_ANALYZED));
-          
+
             return document;
         }
 
