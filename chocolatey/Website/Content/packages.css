@@ -127,11 +127,36 @@ textarea {
     color: #fff;
 }
 
+.validation-summary-errors ul {
+    list-style-type: none;
+    padding-left: 0;
+    margin-top: 1rem;
+    margin-bottom: 0;
+}
+
+.validation-summary-errors ul li {
+    padding-left: 1rem;
+    border-left: 6px solid #f4516c;
+}
+
+.validation-summary-errors ul li:not(:first-child) {
+    margin-top: .5rem;
+}
+
+.validation-summary-errors ul li, .field-hint-message, .field-validation-error, .was-validated .form-check-input:invalid ~ .form-check-label {
+    color: #f4516c;
+}
+
+.validation-summary-errors ul li, .field-hint-message, .field-validation-error {
+    font-weight: bold;
+}
+
 @media (min-width: 768px) {
     #package-sidebar .package-logo {
         max-width: 150px;
     }
 }
+
 @media (min-width: 992px) {
     .package-list-view .package-list-align {
         padding-left: 67px;
