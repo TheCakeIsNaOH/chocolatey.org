@@ -1163,7 +1163,7 @@ namespace NuGetGallery
             InvalidateCache(package.PackageRegistration.Id, package.PackageRegistration.Key);
         }
 
-        public void ExemptPackageFromTesting(Package package, bool exemptPackage, string reason, User reviewer)
+        public void ExemptPackageFromTesting(Package package, bool exemptPackage, string reason, User reviewer, string newComments)
         {
             if (package.PackageRegistration.ExemptedFromVerification == exemptPackage) return;
 
@@ -1185,12 +1185,35 @@ namespace NuGetGallery
 
             packageRepo.CommitChanges();
             packageRegistrationRepo.CommitChanges();
+
+            if (exemptPackage)
+            {
+                if (!string.IsNullOrWhiteSpace(newComments)) newComments += "{0}".format_with(Environment.NewLine);
+                newComments += "Auto Verification Change - Verfication tests have been exempted.";
+            }
+            else
+            {
+                if (!string.IsNullOrWhiteSpace(newComments)) newComments += "{0}".format_with(Environment.NewLine);
+                newComments += "Auto Verification Change - Verfication tests have been set to unknown.";
+            }
         }
 
-        public void ExemptPackageFromValidation(Package package)
+        public void ExemptPackageFromValidation(Package package, string reason, User reviewer)
         {
             package.PackageValidationResultStatus = PackageAutomatedReviewResultStatusType.Exempted;
             package.PackageValidationResultDate = DateTime.UtcNow;
+            package.ExemptedFromValidatorById = reviewer.Key;
+            package.ExemptedFromValidatorReason = reason;
+
+            packageRepo.CommitChanges();
+        }
+
+        public void ExemptPackageFromScanner(Package package, string reason, User reviewer)
+        {
+            package.PackageScanStatus = PackageScanStatusType.Exempted;
+            package.PackageScanResultDate = DateTime.UtcNow;
+            package.ExemptedFromScannerById = reviewer.Key;
+            package.ExemptedFromScannerReason = reason;
 
             packageRepo.CommitChanges();
         }
