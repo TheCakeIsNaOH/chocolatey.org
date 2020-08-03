@@ -281,7 +281,8 @@ any moderation related failures.",
                 }
                 catch (Exception ex)
                 {
-                    Trace.TraceError("[{0}] - Unable to delete temporary file at '{1}':{2} {3}.".format_with(requestId, temporaryFile, Environment.NewLine, ex.to_string()));
+                    Trace.TraceError("[{0}] - Unable to delete temporary file at '{1}':{2} {3}.".format_with(requestId, temporaryFile));
+                    Trace.TraceError("[{0}]   - {1}", requestId, ex.to_string());
                     ErrorSignal.FromCurrentContext().Raise(ex);
                     //todo: is this really an error if we can't remove a file? Everything else was successful for the user
                     //return new HttpStatusCodeWithBodyResult(HttpStatusCode.InternalServerError, "Could not remove temporary upload file: {0}", ex.Message);
@@ -296,7 +297,8 @@ any moderation related failures.",
                     errorMessage.AppendLine(innerException.Message);
                 }
 
-                Trace.TraceError("[{0}] - Pushing package '{1}' (v{2}) had error(s):{3} {4}", requestId, packageId, packageVersion.to_string(), Environment.NewLine, errorMessage.to_string());
+                Trace.TraceError("[{0}] - Pushing package '{1}' (v{2}) had error(s):{3} {4}", requestId, packageId, packageVersion.to_string());
+                Trace.TraceError("[{0}]   - {1}", requestId, errorMessage.to_string());
                 return new HttpStatusCodeWithBodyResult(HttpStatusCode.Conflict, string.Format("This package had an issue pushing: {0}", ex.Message));
             }
             finally
