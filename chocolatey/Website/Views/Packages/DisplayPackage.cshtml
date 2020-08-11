@@ -1141,7 +1141,7 @@ salt '*' chocolatey.install @Model.Id.ToLower() version="@Model.Version" source=
                                         <label for="RerunTests" class="for-checkbox" title="Only necessary if there was a mistake in the test run. A package repush will trigger test reruns.">Rerun verification tests?</label>
                                     </div>
                                 }
-                                @if (moderator || (Model.PackageScanResultStatus == PackageScanStatusType.Flagged || Model.PackageScanResultStatus == PackageScanStatusType.Investigate || Model.PackageScanResultStatus == PackageScanStatusType.ScannerExempted))
+                                @if (moderator || Model.PackageScanResultStatus == PackageScanStatusType.Flagged)
                                 {
                                     <div class="form-field">
                                         <input id="RerunVirusScanner" name="RerunVirusScanner" type="checkbox" value="true" />
