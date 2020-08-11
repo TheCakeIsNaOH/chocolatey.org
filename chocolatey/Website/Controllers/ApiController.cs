@@ -490,11 +490,11 @@ any moderation related failures.",
             package.PackageValidationResultDate = DateTime.UtcNow;
             package.PackageValidationResultStatus = PackageAutomatedReviewResultStatusType.Failing;
 
-            var message = "{0} has failed automated validation.".format_with(package.PackageRegistration.Id);
+            var message = "{0} has failed automated package validation.".format_with(package.PackageRegistration.Id);
             if (success)
             {
                 package.PackageValidationResultStatus = PackageAutomatedReviewResultStatusType.Passing;
-                message = "{0} has passed automated validation.".format_with(package.PackageRegistration.Id);
+                message = "{0} has passed automated package validation.".format_with(package.PackageRegistration.Id);
             }
 
             message += "{0}{1}".format_with(Environment.NewLine, validationComments);
@@ -688,12 +688,12 @@ any moderation related failures.",
             package.PackageScanStatus = packageScanStatus;
             package.PackageScanFlagResult = packageScanFlagResult;
 
-            var message = "{0} has failed automated scanning.".format_with(package.PackageRegistration.Id);
+            var message = "{0} has failed automated virus scanning.".format_with(package.PackageRegistration.Id);
             var newSubmittedStatus = package.SubmittedStatus;
 
             if (packageScanStatus == PackageScanStatusType.NotFlagged && packageScanFlagResult == PackageScanFlagResultType.None)
             {
-                message = "{0} has passed automated scanning.".format_with(package.PackageRegistration.Id);
+                message = "{0} has passed automated virus scanning.".format_with(package.PackageRegistration.Id);
             }
 
             if (packageScanFlagResult == PackageScanFlagResultType.Error)
@@ -708,7 +708,7 @@ any moderation related failures.",
             if (packageScanStatus == PackageScanStatusType.Investigate
                 || packageScanStatus == PackageScanStatusType.ScannerExempted)
             {
-                message = "{0} has passed automated scanning, however requires human verification.".format_with(package.PackageRegistration.Id);
+                message = "{0} has passed automated virus scanning, however requires human verification.".format_with(package.PackageRegistration.Id);
                 message += "{0}Package Scan Status Type was: {1}.".format_with(Environment.NewLine, packageScanStatus);
                 message += "{0}This could mean that a file for this package was too large to be scanned, or that the number of scanned files doesn't match the number of expected files.".format_with(Environment.NewLine);
                 message += "{0}Check the virus scan results for additional information.".format_with(Environment.NewLine);

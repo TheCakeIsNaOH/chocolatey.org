@@ -282,7 +282,7 @@ namespace NuGetGallery
             {
                 packageSvc.ExemptPackageFromValidation(package, exemptValidationReason, currentUser);
                 if (!string.IsNullOrWhiteSpace(newComments)) newComments += "{0}".format_with(Environment.NewLine);
-                newComments += "Auto Validation Change - Validation tests have been exempted.";
+                newComments += "Validation Status Change - Validation tests have been exempted.";
             }
 
             bool exemptScanner = form["ExemptPackageFromScanner"].clean_html() == "true";
@@ -300,7 +300,7 @@ namespace NuGetGallery
             {
                 packageSvc.ExemptPackageFromScanner(package, exemptScannerReason, currentUser);
                 if (!string.IsNullOrWhiteSpace(newComments)) newComments += "{0}".format_with(Environment.NewLine);
-                newComments += "Auto Scanner Change - Scanner tests have been exempted.";
+                newComments += "Scanner Status Change - Scanner tests have been exempted.";
             }
 
             bool rerunTests = form["RerunTests"].clean_html() == "true";
@@ -308,7 +308,7 @@ namespace NuGetGallery
             {
                 packageSvc.ResetPackageTestStatus(package);
                 if (!string.IsNullOrWhiteSpace(newComments)) newComments += "{0}".format_with(Environment.NewLine);
-                newComments += "Auto Verification Change - Verification tests have been set to rerun.";
+                newComments += "Verification Status Change - Verification tests have been set to rerun.";
             }
 
             bool rerunValidation = form["RerunValidation"].clean_html() == "true";
@@ -316,7 +316,7 @@ namespace NuGetGallery
             {
                 packageSvc.ResetPackageValidationStatus(package);
                 if (!string.IsNullOrWhiteSpace(newComments)) newComments += "{0}".format_with(Environment.NewLine);
-                newComments += "Auto Validation Change - Validation tests have been set to rerun.";
+                newComments += "Validation Status Change - Validation tests have been set to rerun.";
             }
 
             bool rerunVirusScanner = form["RerunVirusScanner"].clean_html() == "true";
@@ -325,7 +325,7 @@ namespace NuGetGallery
                 package.PackageScanStatus = PackageScanStatusType.Unknown;
                 packageSvc.SaveMinorPackageChanges(package);
                 if (!string.IsNullOrWhiteSpace(newComments)) newComments += "{0}".format_with(Environment.NewLine);
-                newComments += "Auto Scanner Change - Virus Scanner has ben set to rerun";
+                newComments += "Scanner Status Change - Virus Scanner has ben set to rerun";
             }
 
             bool rerunPackageCacher = form["RerunPackageCacher"].clean_html() == "true";
