@@ -66,7 +66,7 @@ namespace NuGetGallery
 
         void ChangeTrustedStatus(Package package, bool trustedPackage, User user);
 
-        void UpdateSubmittedStatusAfterAutomatedReviews(Package package);
+        void UpdateSubmittedStatusAfterAutomatedReviews(Package package, PackageScanFlagResultType scanFlagResult = PackageScanFlagResultType.Unknown);
 
         void ChangePackageTestStatus(Package package, bool success, string resultDetailsUrl, User testReporter);
 

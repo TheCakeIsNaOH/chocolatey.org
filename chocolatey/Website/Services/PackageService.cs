@@ -1048,7 +1048,7 @@ namespace NuGetGallery
             InvalidateCache(package.PackageRegistration.Id, package.PackageRegistration.Key);
         }
 
-        public void UpdateSubmittedStatusAfterAutomatedReviews(Package package)
+        public void UpdateSubmittedStatusAfterAutomatedReviews(Package package, PackageScanFlagResultType scanFlagResult = PackageScanFlagResultType.Unknown)
         {
             var now = DateTime.UtcNow;
 
@@ -1074,7 +1074,7 @@ namespace NuGetGallery
                     package.Status = PackageStatusType.Exempted;
                 }
 
-                var trustedPackagePassingAutomatedReview = PackageIsTrusted(package) && passingScanner && passingVerification && passingValidation;
+                var trustedPackagePassingAutomatedReview = PackageIsTrusted(package) && passingScanner && passingVerification && passingValidation && scanFlagResult != PackageScanFlagResultType.Error;
                 if (trustedPackagePassingAutomatedReview)
                 {
                     package.Listed = true;

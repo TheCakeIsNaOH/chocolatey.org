@@ -689,14 +689,32 @@ any moderation related failures.",
             package.PackageScanFlagResult = packageScanFlagResult;
 
             var message = "{0} has failed automated scanning.".format_with(package.PackageRegistration.Id);
-            if (packageScanStatus == PackageScanStatusType.NotFlagged)
+            var newSubmittedStatus = package.SubmittedStatus;
+
+            if (packageScanStatus == PackageScanStatusType.NotFlagged && packageScanFlagResult == PackageScanFlagResultType.None)
             {
                 message = "{0} has passed automated scanning.".format_with(package.PackageRegistration.Id);
             }
 
-            packageSvc.UpdateSubmittedStatusAfterAutomatedReviews(package);
+            if (packageScanFlagResult == PackageScanFlagResultType.Error)
+            {
+                // Send back to maintainer to address problem.
+                newSubmittedStatus = PackageSubmittedStatusType.Waiting;
 
-            packageSvc.ChangePackageStatus(package, package.Status, package.ReviewComments, message, testReporterUser, testReporterUser, sendMaintainerEmail: true, submittedStatus: package.SubmittedStatus, assignReviewer: false);
+                if (!string.IsNullOrWhiteSpace(message)) message += "{0}".format_with(Environment.NewLine);
+                message += "At least one file within this package had greater than 10 detections.";
+            }
+
+            if (packageScanStatus == PackageScanStatusType.Investigate
+                || packageScanStatus == PackageScanStatusType.ScannerExempted)
+            {
+                message = "{0} has passed automated scanning, however requires human verification.".format_with(package.PackageRegistration.Id);
+                message += "{0}Package Scan Status Type was: {1}.".format_with(Environment.NewLine, packageScanStatus);
+                message += "{0}This could mean that a file for this package was too large to be scanned, or that the number of scanned files doesn't match the number of expected files.".format_with(Environment.NewLine);
+                message += "{0}Check the virus scan results for additional information.".format_with(Environment.NewLine);
+            }
+            packageSvc.UpdateSubmittedStatusAfterAutomatedReviews(package, packageScanFlagResult);
+            packageSvc.ChangePackageStatus(package, package.Status, package.ReviewComments, message, testReporterUser, testReporterUser, sendMaintainerEmail: true, submittedStatus: newSubmittedStatus, assignReviewer: false);
 
             return new HttpStatusCodeWithBodyResult(HttpStatusCode.Accepted, "Package scan results have been updated.");
         }
