@@ -217,6 +217,17 @@ namespace NuGetGallery
             //    return View("~/Views/Packages/DisplayPackage.cshtml", model);
             //}
 
+            if (status == PackageStatusType.Approved && package.PackageScanStatus == PackageScanStatusType.Exempted)
+            {
+                // In this case, an exemption from the package scanner has been provided by a Moderator, and now the
+                // package is attempting to be approved.  This isn't allowed.  Instead, the package should be marked
+                // as exempted, not approved.
+                status = PackageStatusType.Exempted;
+
+                if (!string.IsNullOrWhiteSpace(newComments)) newComments += "{0}".format_with(Environment.NewLine);
+                newComments += "When a package has been exempted from the package scanner, it cannot be approved. - Package has been marked as exempted.";
+            }
+
             if (maintainerReject && string.IsNullOrWhiteSpace(newComments))
             {
                 ModelState.AddModelError(String.Empty, "In order to reject a package version, you must provide comments indicating why it is being rejected.");
