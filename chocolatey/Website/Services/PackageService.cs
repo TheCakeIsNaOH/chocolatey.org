@@ -1205,6 +1205,10 @@ namespace NuGetGallery
             package.ExemptedFromValidatorById = reviewer.Key;
             package.ExemptedFromValidatorReason = reason;
 
+            // Since the package is being exempted from package-validator, we should set the submitted
+            // status back to pending, so that the moderation process can continue
+            package.SubmittedStatus = PackageSubmittedStatusType.Pending;
+
             packageRepo.CommitChanges();
         }
 
@@ -1214,6 +1218,11 @@ namespace NuGetGallery
             package.PackageScanResultDate = DateTime.UtcNow;
             package.ExemptedFromScannerById = reviewer.Key;
             package.ExemptedFromScannerReason = reason;
+
+            // Since the package is being exempted from package-scanner (which is the last check
+            // in the moderation process), we should set the submitted status to ready, so
+            // that the moderation process can continue
+            package.SubmittedStatus = PackageSubmittedStatusType.Ready;
 
             packageRepo.CommitChanges();
         }

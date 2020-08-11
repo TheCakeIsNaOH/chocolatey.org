@@ -332,9 +332,11 @@ namespace NuGetGallery
             packageSvc.ChangePackageStatus(package, status, package.ReviewComments, newComments, currentUser,
                 moderator, sendMaintainerEmail,
                 isModerationRole ?
-                    changeSubmittedStatus ?
-                        PackageSubmittedStatusType.Waiting
-                        : package.SubmittedStatus
+                    exemptScanner || exemptValidation ?
+                        package.SubmittedStatus
+                        : changeSubmittedStatus ?
+                            PackageSubmittedStatusType.Waiting
+                            : package.SubmittedStatus
                     : PackageSubmittedStatusType.Responded,
                     assignReviewer: true
             );
