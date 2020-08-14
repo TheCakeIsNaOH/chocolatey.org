@@ -1,0 +1,326 @@
+{
+	"info": {
+		"_postman_id": "e8035bb2-d8e0-471f-b74e-3c3e550549d5",
+		"name": "Chocolatey.org Queries",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Validation Success",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "apikey",
+							"value": "{{API-KEY}}",
+							"type": "text"
+						},
+						{
+							"key": "success",
+							"value": "true",
+							"type": "text"
+						},
+						{
+							"key": "validationComments",
+							"value": "All Good",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{SITE-URL}}/api/v2/validate/{{PACKAGE-NAME}}/{{PACKAGE-VERSION}}",
+					"host": [
+						"{{SITE-URL}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"validate",
+						"{{PACKAGE-NAME}}",
+						"{{PACKAGE-VERSION}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Validation Failure",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "apikey",
+							"value": "{{API-KEY}}",
+							"type": "text"
+						},
+						{
+							"key": "success",
+							"value": "false",
+							"type": "text"
+						},
+						{
+							"key": "validationComments",
+							"value": "Broken URL",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{SITE-URL}}/api/v2/validate/{{PACKAGE-NAME}}/{{PACKAGE-VERSION}}",
+					"host": [
+						"{{SITE-URL}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"validate",
+						"{{PACKAGE-NAME}}",
+						"{{PACKAGE-VERSION}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Verification Success",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "apikey",
+							"value": "{{API-KEY}}",
+							"type": "text"
+						},
+						{
+							"key": "success",
+							"value": "true",
+							"type": "text"
+						},
+						{
+							"key": "resultDetailsUrl",
+							"value": "https://chocolatey.org",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{SITE-URL}}/api/v2/test/{{PACKAGE-NAME}}/{{PACKAGE-VERSION}}",
+					"host": [
+						"{{SITE-URL}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"test",
+						"{{PACKAGE-NAME}}",
+						"{{PACKAGE-VERSION}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Verification Failure",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "apikey",
+							"value": "{{API-KEY}}",
+							"type": "text"
+						},
+						{
+							"key": "success",
+							"value": "false",
+							"type": "text"
+						},
+						{
+							"key": "resultDetailsUrl",
+							"value": "https://chocolatey.org",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{SITE-URL}}/api/v2/test/{{PACKAGE-NAME}}/{{PACKAGE-VERSION}}",
+					"host": [
+						"{{SITE-URL}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"test",
+						"{{PACKAGE-NAME}}",
+						"{{PACKAGE-VERSION}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Scan Success",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "apikey",
+							"value": "{{API-KEY}}",
+							"type": "text"
+						},
+						{
+							"key": "scanStatus",
+							"value": "notflagged",
+							"type": "text"
+						},
+						{
+							"key": "scanFlagResult",
+							"value": "none",
+							"type": "text"
+						},
+						{
+							"key": "[0].Sha256Checksum",
+							"value": "ecc19da3f471316e47d3f8d9f591c8958cc1347bee8ef6ae1ccff2d86018db88",
+							"type": "text"
+						},
+						{
+							"key": "[0].FileName",
+							"value": "windowsphonedevelopertools.1.0.nupkg",
+							"type": "text"
+						},
+						{
+							"key": "[0].ScanDetailsUrl",
+							"value": "https://www.virustotal.com/file/ecc19da3f471316e47d3f8d9f591c8958cc1347bee8ef6ae1ccff2d86018db88/analysis/",
+							"type": "text"
+						},
+						{
+							"key": "[0].Positives",
+							"value": "0",
+							"type": "text"
+						},
+						{
+							"key": "[0].TotalScans",
+							"value": "56",
+							"type": "text"
+						},
+						{
+							"key": "[0].ScanDate",
+							"value": "2016-02-29 08:52:14.000",
+							"type": "text"
+						},
+						{
+							"key": "[0].ScanData",
+							"value": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{SITE-URL}}/api/v2/scan/{{PACKAGE-NAME}}/{{PACKAGE-VERSION}}",
+					"host": [
+						"{{SITE-URL}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"scan",
+						"{{PACKAGE-NAME}}",
+						"{{PACKAGE-VERSION}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Scan Failure",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "apikey",
+							"value": "{{API-KEY}}",
+							"type": "text"
+						},
+						{
+							"key": "scanStatus",
+							"value": "flagged",
+							"type": "text"
+						},
+						{
+							"key": "scanFlagResult",
+							"value": "error",
+							"type": "text"
+						},
+						{
+							"key": "[0].Sha256Checksum",
+							"value": "ecc19da3f471316e47d3f8d9f591c8958cc1347bee8ef6ae1ccff2d86018db88",
+							"type": "text"
+						},
+						{
+							"key": "[0].FileName",
+							"value": "windowsphonedevelopertools.1.0.nupkg",
+							"type": "text"
+						},
+						{
+							"key": "[0].ScanDetailsUrl",
+							"value": "https://www.virustotal.com/file/ecc19da3f471316e47d3f8d9f591c8958cc1347bee8ef6ae1ccff2d86018db88/analysis/",
+							"type": "text"
+						},
+						{
+							"key": "[0].Positives",
+							"value": "1313",
+							"type": "text"
+						},
+						{
+							"key": "[0].TotalScans",
+							"value": "56",
+							"type": "text"
+						},
+						{
+							"key": "[0].ScanDate",
+							"value": "2016-02-29 08:52:14.000",
+							"type": "text"
+						},
+						{
+							"key": "[0].ScanData",
+							"value": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{SITE-URL}}/api/v2/scan/{{PACKAGE-NAME}}/{{PACKAGE-VERSION}}",
+					"host": [
+						"{{SITE-URL}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"scan",
+						"{{PACKAGE-NAME}}",
+						"{{PACKAGE-VERSION}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
