@@ -49,8 +49,8 @@ namespace NuGetGallery
         private readonly IIndexingService indexingSvc;
         private readonly IPackageStatisticsService packageStatsSvc;
         private readonly string submittedStatus = PackageStatusType.Submitted.GetDescriptionOrValue();
-        private const string TESTING_PASSED_MESSAGE = "has passed automated package testing";
-        private const string TESTING_FAILED_MESSAGE = "has failed automated package testing";
+        private const string TESTING_PASSED_MESSAGE = "has passed automated package testing (verification). The next step in the process is package scanning";
+        private const string TESTING_FAILED_MESSAGE = "has failed automated package testing (verification)";
 
         private const int DEFAULT_CACHE_TIME_MINUTES_PACKAGES = 180;
 
@@ -1107,7 +1107,7 @@ namespace NuGetGallery
 
             packageRepo.CommitChanges();
 
-            var testComments = string.Format("{0} {1}.{2} This is not the only check that is performed. Check the package page to ensure the package has reached 'Ready' status.{2} Please visit {3} for details.",
+            var testComments = string.Format("{0} {1}.",
                 package.PackageRegistration.Id,
                 success ? TESTING_PASSED_MESSAGE : TESTING_FAILED_MESSAGE,
                 Environment.NewLine,

@@ -494,7 +494,7 @@ any moderation related failures.",
             if (success)
             {
                 package.PackageValidationResultStatus = PackageAutomatedReviewResultStatusType.Passing;
-                message = "{0} has passed automated package validation.".format_with(package.PackageRegistration.Id);
+                message = "{0} has passed automated package validation. The next step in the process is package testing (verification).".format_with(package.PackageRegistration.Id);
             }
 
             message += "{0}{1}".format_with(Environment.NewLine, validationComments);
@@ -702,7 +702,7 @@ any moderation related failures.",
                 newSubmittedStatus = PackageSubmittedStatusType.Waiting;
 
                 if (!string.IsNullOrWhiteSpace(message)) message += "{0}".format_with(Environment.NewLine);
-                message += "At least one file within this package had greater than 10 detections.";
+                message += "Package virus scanning failed with greater than 10 detections on at least one of the files. This package is now in a wait state while you review the findings and provide an updated package or send a message in the package review box on the package page.";
             }
 
             if (packageScanStatus == PackageScanStatusType.Investigate
