@@ -173,6 +173,7 @@ namespace NuGetGallery
             document.Add(new Field("DownloadCache", Package.DownloadCache.to_string(), Field.Store.YES, Field.Index.NO));
             document.Add(new Field("PackageScanStatus", Package.PackageScanStatus.to_string(), Field.Store.YES, Field.Index.NO));
             if (Package.PackageScanResultDate.HasValue) document.Add(new Field("PackageScanResultDate", Package.PackageScanResultDate.GetValueOrDefault().ToString(CultureInfo.InvariantCulture), Field.Store.YES, Field.Index.NO));
+            document.Add(new Field("PackageScanFlagResult", Package.PackageScanFlagResult.to_string(), Field.Store.YES, Field.Index.NO));
 
             if (Package.PackageRegistration.Owners.AnySafe())
             {
