@@ -1090,6 +1090,8 @@ namespace NuGetGallery
                     messageSvc.SendPackageModerationEmail(package, null, Constants.MODERATION_FINISHED, null);
                 }
             }
+
+            packageRepo.CommitChanges();
         }
 
         private bool PackageIsTrusted(Package package)

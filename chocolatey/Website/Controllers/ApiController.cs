@@ -713,8 +713,9 @@ any moderation related failures.",
                 message += "{0}This could mean that a file for this package was too large to be scanned, or that the number of scanned files doesn't match the number of expected files.".format_with(Environment.NewLine);
                 message += "{0}Check the virus scan results for additional information.".format_with(Environment.NewLine);
             }
-            packageSvc.UpdateSubmittedStatusAfterAutomatedReviews(package, packageScanFlagResult);
+
             packageSvc.ChangePackageStatus(package, package.Status, package.ReviewComments, message, testReporterUser, testReporterUser, sendMaintainerEmail: true, submittedStatus: newSubmittedStatus, assignReviewer: false);
+            packageSvc.UpdateSubmittedStatusAfterAutomatedReviews(package, packageScanFlagResult);
 
             return new HttpStatusCodeWithBodyResult(HttpStatusCode.Accepted, "Package scan results have been updated.");
         }
